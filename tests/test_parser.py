@@ -1,3 +1,7 @@
+"""
+Test of core.Parser
+
+"""
 import unittest
 
 from core.parser import Parser
@@ -81,6 +85,26 @@ class MyTestCase(unittest.TestCase):
             tuple(parser.required_args()),
             ('a', 'b', 'd', 'e'))
 
+    def test_test_args_1(self):
+        def test_func(a:int, b:str, c:int=5, d=1):
+            pass
+
+        parser = Parser(test_func)
+        self.my_assert(
+            parser.test_args(1, '2'),
+            True
+            )
+
+    def test_test_args_2(self):
+        def test_func(a:int, b:str, c=5, e=3, d=1):
+            pass
+
+        parser = Parser(test_func)
+
+        self.my_assert(
+            parser.test_args(*[1, '2'], **{'e': 8}),
+            True
+            )
 
 
 if __name__ == '__main__':

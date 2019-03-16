@@ -9,7 +9,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(
             exp1, exp2, "<< {} >> != << {} >>".format(exp1, exp2))
 
-    def test_1(self):
+    def test_get_arguments(self):
         def test_func(a, b, c, d):
             pass
 
@@ -18,7 +18,7 @@ class MyTestCase(unittest.TestCase):
             tuple(parser.get_arguments()),
             (('a', 'b', 'c', 'd'), (), (), ()))
 
-    def test_2(self):
+    def test_get_arguments_2(self):
         def test_func(a, b, c, d, *args):
             pass
 
@@ -27,7 +27,7 @@ class MyTestCase(unittest.TestCase):
             tuple(parser.get_arguments()),
             (('a', 'b', 'c', 'd'), (), ('args',),  ()))
 
-    def test_3(self):
+    def test_get_arguments_3(self):
         def test_func(a, b, c, d, e, *args, **kwargs):
             pass
 
@@ -36,7 +36,7 @@ class MyTestCase(unittest.TestCase):
             tuple(parser.get_arguments()),
             (('a', 'b', 'c', 'd', 'e'), (), ('args',), ('kwargs',)))
 
-    def test_4(self):
+    def test_get_arguments_4(self):
         def test_func(a, b, c=4, *args, d, e, **kwargs):
             pass
 
@@ -44,6 +44,43 @@ class MyTestCase(unittest.TestCase):
         self.my_assert(
             tuple(parser.get_arguments()),
             (('a', 'b', 'c'), ('d', 'e'), ('args',), ('kwargs',)))
+
+    def test_required_args_1(self):
+        def test_func(a, b, c=5, d=1):
+            pass
+
+        parser = Parser(test_func)
+        self.my_assert(
+            tuple(parser.required_args()),
+            ('a', 'b'))
+
+    def test_required_args_2(self):
+        def test_func(a, b, c, d, *args):
+            pass
+
+        parser = Parser(test_func)
+        self.my_assert(
+            tuple(parser.required_args()),
+            ('a', 'b', 'c', 'd'))
+
+    def test_required_args_3(self):
+        def test_func(a, b, c, d, e, *args, **kwargs):
+            pass
+
+        parser = Parser(test_func)
+        self.my_assert(
+            tuple(parser.required_args()),
+            ('a', 'b', 'c', 'd', 'e'))
+
+    def test_required_args_4(self):
+        def test_func(a, b, c=4, *args, d, e, **kwargs):
+            pass
+
+        parser = Parser(test_func)
+        self.my_assert(
+            tuple(parser.required_args()),
+            ('a', 'b', 'd', 'e'))
+
 
 
 if __name__ == '__main__':

@@ -72,23 +72,22 @@ class Parser:
         else:
             yield ()
 
-
-
         return
-        args_count = self.func.__code__.co_argcount
-        var_names = self.func.__code__.co_varnames
 
-        if args_count == len(var_names):
-            # without *args and **kwargs
-            return tuple(var_names), (), (), ()
-        elif not self.func.__code__.co_kwonlyargcount:
-            # without *args
-            if len(var_names) - args_count == 1:
-                return tuple(var_names[:-1]), (), (), (var_names[-1])
-            return
-        else:
-            # with *args
-            return
+    def required_args(self):
+        var_names = list(self.get_arguments())
+        var_names = list(var_names[0]) + list(var_names[1])
+        var_defaults = self.get_default_value_from_sig()
+        return [x for x in var_names if x not in var_defaults]
 
+    def get_default_value_from_sig(self):
 
+        sig = signature(self.func)
+
+        var_names = [
+            n for n, p in sig.parameters.items() if p._default != p.empty]
+        if var_names:
+            return dict(zip(var_names, self.func.__defaults__))
+
+        return dict()
 

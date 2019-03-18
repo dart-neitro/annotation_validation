@@ -1,5 +1,6 @@
-from functools import wraps
 from inspect import signature
+
+from annotation_validation.core.exceptions import AnnotationTypeError
 
 
 class Parser:
@@ -127,7 +128,7 @@ class Parser:
         for var_name in var_args:
             if var_name in var_types:
                 if not isinstance(var_args[var_name], var_types[var_name]):
-                    raise TypeError(
+                    raise AnnotationTypeError(
                         'The parameter <{var_name}> '
                         'must be {type_name}, not {type_current}'.format(
                             var_name=var_name,
@@ -139,7 +140,7 @@ class Parser:
         for var_name in kwargs:
             if var_name in var_types:
                 if not isinstance(kwargs[var_name], var_types[var_name]):
-                    raise TypeError(
+                    raise AnnotationTypeError(
                         'The parameter <{var_name}> '
                         'must be {type_name}, not {type_current}'.format(
                             var_name=var_name,

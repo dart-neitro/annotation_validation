@@ -1,3 +1,2 @@
-+ Solve problem of queue
-
-()
+* Add examples
+* work with typing package

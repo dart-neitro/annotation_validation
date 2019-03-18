@@ -5,3 +5,6 @@ Checking:
 
 or if you are using virtualenv:
 >> python -c "from annotation_validation import check_types; print('Success')"
+
+
+You can find examples in "/annotation_validation/examples" folder

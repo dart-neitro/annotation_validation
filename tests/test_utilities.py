@@ -5,6 +5,7 @@ Test of core.utilities.check_types
 import unittest
 
 from annotation_validation.core.utilities import check_types
+from annotation_validation.core.exceptions import AnnotationTypeError
 
 
 class MyTestCase(unittest.TestCase):
@@ -54,7 +55,7 @@ class MyTestCase(unittest.TestCase):
         def test_func(a:int, b:str, c=5, *args, e=3, d=1, **kwargs):
             pass
 
-        with self.assertRaises(TypeError):
+        with self.assertRaises(AnnotationTypeError):
             test_func(*[1, 2], **{'e': 8})
 
 

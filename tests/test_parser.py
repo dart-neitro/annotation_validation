@@ -106,6 +106,39 @@ class MyTestCase(unittest.TestCase):
             True
             )
 
+    def test_test_args_3(self):
+        def test_func(a:int, b:str, c=5, e=3, d=1, *args):
+            pass
+
+        parser = Parser(test_func)
+
+        self.my_assert(
+            parser.test_args(*[1, '2'], **{'e': 8}),
+            True
+            )
+
+    def test_test_args_4(self):
+        def test_func(a:int, b:str, c=5, e=3, d=1, *args, **kwargs):
+            pass
+
+        parser = Parser(test_func)
+
+        self.my_assert(
+            parser.test_args(*[1, '2'], **{'e': 8}),
+            True
+            )
+
+    def test_test_args_5(self):
+        def test_func(a:int, b:str, c=5, *args, e=3, d=1, **kwargs):
+            pass
+
+        parser = Parser(test_func)
+
+        self.my_assert(
+            parser.test_args(*[1, '2'], **{'e': 8}),
+            True
+            )
+
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(MyTestCase)

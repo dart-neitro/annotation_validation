@@ -4,7 +4,7 @@ Test of core.Parser
 """
 import unittest
 
-from core.parser import Parser
+from annotation_validation.core.parser import Parser
 
 
 class MyTestCase(unittest.TestCase):

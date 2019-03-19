@@ -6,6 +6,9 @@ import unittest
 
 from annotation_validation.core.parser import Parser
 
+from annotation_validation.core.exceptions import (
+    AnnotationTypeError, ReturnAnnotationTypeError)
+
 
 class MyTestCase(unittest.TestCase):
 
@@ -138,6 +141,80 @@ class MyTestCase(unittest.TestCase):
             parser.test_args(*[1, '2'], **{'e': 8}),
             True
             )
+
+    def test_test_args_6(self):
+        def test_func(a:int):
+            pass
+
+        parser = Parser(test_func)
+
+        with self.assertRaises(AnnotationTypeError):
+            parser.test_args('a')
+
+    def test_test_return_1(self):
+        def test_func() -> int:
+            pass
+
+        parser = Parser(test_func)
+
+        with self.assertRaises(ReturnAnnotationTypeError):
+            parser.test_return('a')
+
+    def test_test_return_2(self):
+        def test_func() -> int:
+            pass
+
+        parser = Parser(test_func)
+
+        with self.assertRaises(ReturnAnnotationTypeError):
+            parser.test_return(object)
+
+    def test_test_return_3(self):
+        def test_func() -> int:
+            pass
+
+        parser = Parser(test_func)
+
+        with self.assertRaises(ReturnAnnotationTypeError):
+            parser.test_return(None)
+
+    def test_test_return_4(self):
+        def test_func() -> int:
+            pass
+
+        parser = Parser(test_func)
+
+        parser.test_return(True)
+        parser.test_return(False)
+        parser.test_return(1)
+
+    def test_test_return_5(self):
+        def test_func() -> tuple:
+            pass
+
+        parser = Parser(test_func)
+
+        parser.test_return(tuple([1, 2, 3]))
+
+    def test_test_return_6(self):
+        def test_func() -> (tuple, list):
+            pass
+
+        parser = Parser(test_func)
+
+        parser.test_return(tuple([1, 2, 3]))
+        parser.test_return([1, 2, 3])
+
+    def test_test_return_7(self):
+        def test_func():
+            pass
+
+        parser = Parser(test_func)
+
+        parser.test_return(True)
+        parser.test_return(False)
+        parser.test_return(1)
+        parser.test_return('1')
 
 
 if __name__ == '__main__':

@@ -14,3 +14,6 @@ You can check used console:
 
 Or if you are using virtualenv:
 > python -c "from annotation_validation import check_types; print('Success')"
+
+Run unittest:
+> python -m unittest

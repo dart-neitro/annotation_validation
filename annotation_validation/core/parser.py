@@ -160,7 +160,7 @@ class Parser:
 
         return True
 
-    def test_return(self, return_value):
+    def check_return(self, return_value):
         """
         test return value
         :return:

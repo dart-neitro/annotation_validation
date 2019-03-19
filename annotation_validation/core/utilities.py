@@ -12,6 +12,6 @@ def check_types(f):
         parser = Parser(f)
         parser.check_args(*args, **kwargs)
         result = f(*args, **kwargs)
-        parser.test_return(result)
+        parser.check_return(result)
         return result
     return wrapper

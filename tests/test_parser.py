@@ -151,70 +151,70 @@ class MyTestCase(unittest.TestCase):
         with self.assertRaises(AnnotationTypeError):
             parser.check_args('a')
 
-    def test_test_return_1(self):
+    def test_check_return_1(self):
         def test_func() -> int:
             pass
 
         parser = Parser(test_func)
 
         with self.assertRaises(ReturnAnnotationTypeError):
-            parser.test_return('a')
+            parser.check_return('a')
 
-    def test_test_return_2(self):
+    def test_check_return_2(self):
         def test_func() -> int:
             pass
 
         parser = Parser(test_func)
 
         with self.assertRaises(ReturnAnnotationTypeError):
-            parser.test_return(object)
+            parser.check_return(object)
 
-    def test_test_return_3(self):
+    def test_check_return_3(self):
         def test_func() -> int:
             pass
 
         parser = Parser(test_func)
 
         with self.assertRaises(ReturnAnnotationTypeError):
-            parser.test_return(None)
+            parser.check_return(None)
 
-    def test_test_return_4(self):
+    def test_check_return_4(self):
         def test_func() -> int:
             pass
 
         parser = Parser(test_func)
 
-        parser.test_return(True)
-        parser.test_return(False)
-        parser.test_return(1)
+        parser.check_return(True)
+        parser.check_return(False)
+        parser.check_return(1)
 
-    def test_test_return_5(self):
+    def test_check_return_5(self):
         def test_func() -> tuple:
             pass
 
         parser = Parser(test_func)
 
-        parser.test_return(tuple([1, 2, 3]))
+        parser.check_return(tuple([1, 2, 3]))
 
-    def test_test_return_6(self):
+    def test_check_return_6(self):
         def test_func() -> (tuple, list):
             pass
 
         parser = Parser(test_func)
 
-        parser.test_return(tuple([1, 2, 3]))
-        parser.test_return([1, 2, 3])
+        parser.check_return(tuple([1, 2, 3]))
+        parser.check_return([1, 2, 3])
 
-    def test_test_return_7(self):
+    def test_check_return_7(self):
         def test_func():
             pass
 
         parser = Parser(test_func)
 
-        parser.test_return(True)
-        parser.test_return(False)
-        parser.test_return(1)
-        parser.test_return('1')
+        parser.check_return(True)
+        parser.check_return(False)
+        parser.check_return(1)
+        parser.check_return('1')
 
 
 if __name__ == '__main__':

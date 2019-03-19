@@ -3,7 +3,8 @@ Parser arguments
 """
 from inspect import signature
 
-from annotation_validation.core.exceptions import AnnotationTypeError
+from annotation_validation.core.exceptions import (
+    AnnotationTypeError, ReturnAnnotationTypeError)
 
 
 class Parser:
@@ -13,7 +14,7 @@ class Parser:
     """
     func = None
 
-    def __init__(self, func: function):
+    def __init__(self, func):
         self.func = func
 
     @property
@@ -26,8 +27,14 @@ class Parser:
         result = []
         sig = signature(self.func)
 
-        if len(sig._parameters) != len(str(sig)[1:-1].split(',')):
-            raise Exception('Oooops! ')
+        str_sig = str(sig)
+        str_sig = str_sig[str_sig.find('(') + 1:str_sig.rfind(')')]
+
+        if not len(sig._parameters) and not str_sig:
+            return []
+
+        if len(sig._parameters) != len(str_sig.split(',')):
+            raise Exception('Oooops!')
 
         for arg in str(sig)[1:-1].split(','):
             result.append(arg.split('=')[0].split(':')[0].strip())
@@ -151,4 +158,21 @@ class Parser:
                             type_current=str(type(kwargs[var_name]))
                         ))
 
+        return True
+
+    def test_return(self, return_value):
+        """
+        test return value
+        :return:
+        """
+        var_types = self.func.__annotations__
+        if 'return' in var_types:
+            if not isinstance(return_value, var_types['return']):
+                raise ReturnAnnotationTypeError(
+                    'The return value '
+                    'must be {type_name}, not {type_current}'.format(
+                        type_name=str(var_types['return']),
+                        type_current=str(type(return_value))
+                        )
+                    )
         return True

@@ -1,5 +1,5 @@
 """
-Simple use
+Simple using @check_types
 """
 
 from annotation_validation import check_types, AnnotationTypeError

@@ -1,3 +1,6 @@
+"""
+Parser arguments
+"""
 from inspect import signature
 
 from annotation_validation.core.exceptions import AnnotationTypeError
@@ -10,7 +13,7 @@ class Parser:
     """
     func = None
 
-    def __init__(self, func):
+    def __init__(self, func: function):
         self.func = func
 
     @property
@@ -55,35 +58,35 @@ class Parser:
 
         # args
         position = self.func.__code__.co_argcount
-        attrs = tuple(var_names[:position])
+        attr_names = tuple(var_names[:position])
 
         var_names = var_names[position:]
         var_names_from_sig = var_names_from_sig[position:]
-        yield attrs
+        yield attr_names
 
         # kwargs
         if self.func.__code__.co_kwonlyargcount:
             position = self.func.__code__.co_kwonlyargcount
-            attrs = tuple(var_names[:position])
+            attr_names = tuple(var_names[:position])
 
             var_names = var_names[position:]
             var_names_from_sig = var_names_from_sig[position:]
-            yield attrs
+            yield attr_names
         else:
             yield ()
 
         # *args
         if var_names_from_sig and var_names_from_sig[0].count('*') == 1:
-            attrs = (var_names[0], )
+            attr_names = (var_names[0], )
             var_names = var_names[1:]
             var_names_from_sig = var_names_from_sig[1:]
-            yield attrs
+            yield attr_names
         else:
             yield ()
 
         if var_names_from_sig and var_names_from_sig[0].count('*') == 2:
-            attrs = (var_names[0], )
-            yield attrs
+            attr_names = (var_names[0], )
+            yield attr_names
         else:
             yield ()
 

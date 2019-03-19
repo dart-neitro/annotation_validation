@@ -1,5 +1,6 @@
 """
-multi type
+Example multi-types using @check_types
+
 """
 from annotation_validation import check_types, AnnotationTypeError
 

@@ -1,5 +1,5 @@
 """
-decorator
+Decorator for check types
 """
 from functools import wraps
 

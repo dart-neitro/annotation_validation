@@ -52,6 +52,23 @@ class MyTestCase(unittest.TestCase):
             tuple(parser.get_arguments()),
             (('a', 'b', 'c'), ('d', 'e'), ('args',), ('kwargs',)))
 
+    def test_get_arguments_5(self):
+        """
+        Test tab
+
+        :return:
+        """
+        def test_func(a,
+                      b,
+                      c=4, *args, d, e, **kwargs):
+            pass
+
+        parser = Parser(test_func)
+        self.my_assert(
+            tuple(parser.get_arguments()),
+            (('a', 'b', 'c'), ('d', 'e'), ('args',), ('kwargs',)))
+
+
     def test_required_args_1(self):
         def test_func(a, b, c=5, d=1):
             pass

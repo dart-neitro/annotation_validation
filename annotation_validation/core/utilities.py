@@ -10,7 +10,7 @@ def check_types(f):
     @wraps(f)
     def wrapper(*args, **kwargs):
         parser = Parser(f)
-        parser.test_args(*args, **kwargs)
+        parser.check_args(*args, **kwargs)
         result = f(*args, **kwargs)
         parser.test_return(result)
         return result

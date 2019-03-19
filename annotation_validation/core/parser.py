@@ -128,7 +128,7 @@ class Parser:
         var_names = list(self.get_arguments())
         dict(zip(var_names, args[:len(var_names[0])]))
 
-    def test_args(self, *args, **kwargs):
+    def check_args(self, *args, **kwargs):
         var_names = list(self.get_arguments())
         var_types = self.func.__annotations__
 

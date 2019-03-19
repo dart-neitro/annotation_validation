@@ -88,68 +88,68 @@ class MyTestCase(unittest.TestCase):
             tuple(parser.required_args()),
             ('a', 'b', 'd', 'e'))
 
-    def test_test_args_1(self):
+    def test_check_args_1(self):
         def test_func(a:int, b:str, c:int=5, d=1):
             pass
 
         parser = Parser(test_func)
         self.my_assert(
-            parser.test_args(1, '2'),
+            parser.check_args(1, '2'),
             True
             )
 
-    def test_test_args_2(self):
+    def test_check_args_2(self):
         def test_func(a:int, b:str, c=5, e=3, d=1):
             pass
 
         parser = Parser(test_func)
 
         self.my_assert(
-            parser.test_args(*[1, '2'], **{'e': 8}),
+            parser.check_args(*[1, '2'], **{'e': 8}),
             True
             )
 
-    def test_test_args_3(self):
+    def test_check_args_3(self):
         def test_func(a:int, b:str, c=5, e=3, d=1, *args):
             pass
 
         parser = Parser(test_func)
 
         self.my_assert(
-            parser.test_args(*[1, '2'], **{'e': 8}),
+            parser.check_args(*[1, '2'], **{'e': 8}),
             True
             )
 
-    def test_test_args_4(self):
+    def test_check_args_4(self):
         def test_func(a:int, b:str, c=5, e=3, d=1, *args, **kwargs):
             pass
 
         parser = Parser(test_func)
 
         self.my_assert(
-            parser.test_args(*[1, '2'], **{'e': 8}),
+            parser.check_args(*[1, '2'], **{'e': 8}),
             True
             )
 
-    def test_test_args_5(self):
+    def test_check_args_5(self):
         def test_func(a:int, b:str, c=5, *args, e=3, d=1, **kwargs):
             pass
 
         parser = Parser(test_func)
 
         self.my_assert(
-            parser.test_args(*[1, '2'], **{'e': 8}),
+            parser.check_args(*[1, '2'], **{'e': 8}),
             True
             )
 
-    def test_test_args_6(self):
+    def test_check_args_6(self):
         def test_func(a:int):
             pass
 
         parser = Parser(test_func)
 
         with self.assertRaises(AnnotationTypeError):
-            parser.test_args('a')
+            parser.check_args('a')
 
     def test_test_return_1(self):
         def test_func() -> int:
